@@ -1,0 +1,35 @@
+{
+  "name": "frontend",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "schema": "graphql-schema-utilities -d -s '../graphql/**/*.graphql' -o ./schema.graphql",
+    "relay": "relay-compiler --src ./src --schema ./schema.graphql --extensions tsx --language typescript"
+  },
+  "dependencies": {
+    "next": "12.0.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-relay": "^12.0.0",
+    "swr": "^1.1.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.11",
+    "@types/react": "17.0.37",
+    "@types/react-relay": "^11.0.2",
+    "@types/uuid": "^8.3.3",
+    "babel-plugin-relay": "^12.0.0",
+    "eslint": "7.32.0",
+    "eslint-config-next": "12.0.4",
+    "graphql": "^15.7.2",
+    "relay-compiler": "^12.0.0",
+    "relay-compiler-language-typescript": "^15.0.0",
+    "relay-config": "^12.0.0",
+    "typescript": "^4.5.2"
+  }
+}

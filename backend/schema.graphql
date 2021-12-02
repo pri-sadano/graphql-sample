@@ -1,0 +1,157 @@
+schema { 
+  query: Query 
+  mutation: Mutation   
+}
+
+"""addTodo のリクエスト."""
+input AddTodoInput {
+  """Mutation ID."""
+  clientMutationId: String!
+
+  """タイトル."""
+  title: String
+}
+
+"""addTodo のレスポンス."""
+type AddTodoPayload {
+  """Mutation ID."""
+  clientMutationId: String!
+
+  """登録した TODO."""
+  todo: Todo
+}
+
+"""closeTodo のリクエスト."""
+input CloseTodoInput {
+  """Mutation ID."""
+  clientMutationId: String!
+
+  """対象の TODO ID."""
+  todoId: ID!
+}
+
+"""closeTodo のレスポンス."""
+type CloseTodoPayload {
+  """Mutation ID."""
+  clientMutationId: String!
+
+  """完了した TODO."""
+  todo: Todo
+}
+
+"""日時を表すスカラー型."""
+scalar DateTime
+
+"""deleteTodo のリクエスト."""
+input DeleteTodoInput {
+  """Mutation ID."""
+  clientMutationId: String!
+
+  """対象の TODO ID."""
+  todoId: ID!
+}
+
+"""deleteTodo のレスポンス."""
+type DeleteTodoPayload {
+  """Mutation ID."""
+  clientMutationId: String!
+}
+
+"""
+Mutation の型宣言.
+extend type して定義を追加する.
+"""
+type Mutation {
+  """TODO を登録する."""
+  addTodo(input: AddTodoInput): AddTodoPayload
+
+  """TODO を完了状態にする."""
+  closeTodo(input: CloseTodoInput): CloseTodoPayload
+
+  """TODO を削除する."""
+  deleteTodo(input: DeleteTodoInput): DeleteTodoPayload
+}
+
+"""ID を持つリソースを表すインターフェース."""
+interface Node {
+  """リソース ID."""
+  id: ID!
+}
+
+"""インクリメンタル検索におけるページ情報を表す型."""
+type PageInfo {
+  """次ページの有無."""
+  hasNextPage: Boolean!
+
+  """前ページの有無."""
+  hasPreviousPage: Boolean!
+
+  """先頭のカーソル."""
+  startCursor: String
+
+  """末尾のカーソル."""
+  endCursor: String
+}
+
+"""
+Query の型宣言. 
+extend type して定義を追加する.
+"""
+type Query {
+  """ID が指す Node を取得する."""
+  node(id: ID!): Node
+
+  """TODO を検索する."""
+  searchTodos(cursor: String): TodoConnection
+}
+
+"""TODO を表す型."""
+type Todo implements Node {
+  """ID."""
+  id: ID!
+
+  """タイトル."""
+  title: String
+
+  """状態."""
+  status: TodoStatus
+
+  """登録日時."""
+  createdAt: DateTime
+
+  """更新日時."""
+  updatedAt: DateTime
+}
+
+"""Todo の検索結果系列."""
+type TodoConnection {
+  """系列に含まれる TodoEdge."""
+  edges: [TodoEdge]
+
+  """系列に含まれる Todo."""
+  nodes: [Todo]
+
+  """系列の位置を表す PageInfo."""
+  pageInfo: PageInfo!
+
+  """検索の Hit 総数."""
+  totalCount: Int!
+}
+
+"""TODO の検索結果要素."""
+type TodoEdge {
+  """要素の位置を表すカーソル."""
+  cursor: String!
+
+  """要素が持つ TODO."""
+  node: Todo
+}
+
+"""TODO の状態."""
+enum TodoStatus {
+  """Open."""
+  OPEN
+
+  """Closed."""
+  CLOSED
+}

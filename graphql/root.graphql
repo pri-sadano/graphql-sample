@@ -1,0 +1,65 @@
+"""
+日時を表すスカラー型.
+"""
+scalar DateTime
+
+"""
+ID を持つリソースを表すインターフェース.
+"""
+interface Node {
+    """
+    リソース ID.
+    """
+    id: ID!
+}
+
+"""
+インクリメンタル検索におけるページ情報を表す型.
+"""
+type PageInfo {
+    """
+    次ページの有無.
+    """
+    hasNextPage: Boolean!
+
+    """
+    前ページの有無.
+    """
+    hasPreviousPage: Boolean!
+
+    """
+    先頭のカーソル.
+    """
+    startCursor: String
+
+    """
+    末尾のカーソル.
+    """
+    endCursor: String
+}
+
+"""
+Query の型宣言. 
+extend type して定義を追加する.
+"""
+type Query {
+    """
+    ID が指す Node を取得する.
+    """
+    node(id: ID!): Node
+}
+
+"""
+Mutation の型宣言.
+extend type して定義を追加する.
+"""
+type Mutation
+
+# スキーマ全体.
+schema {
+    # Query.
+    query: Query
+
+    # Mutation.
+    mutation: Mutation
+}
