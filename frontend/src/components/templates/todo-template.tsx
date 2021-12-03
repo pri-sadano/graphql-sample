@@ -144,7 +144,8 @@ export const TodoTemplate: FC<Props> = (props) => {
                 dataLength={nodes.length}
                 next={() => props.next(pageInfo?.endCursor)}
                 hasMore={pageInfo?.hasNextPage}
-                loader={null}>
+                loader={null}
+                style={{ overflowY: 'hidden' }}>
                 {nodes.map((node: any, index: number) => {
                     return (
                         <Todo key={index} index={index} data={node} closeHandler={closeTodoHandler} deleteHandler={deleteTodoHandler} />

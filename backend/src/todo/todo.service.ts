@@ -18,7 +18,7 @@ export class TodoService {
      */
     async searchTodos(cursor: string): Promise<TodoConnectionDto> {
         const skip = parseInt(cursor || '0')
-        const take = 5
+        const take = 100
         const todos = await this.prisma.todo.findMany({
             skip: skip,
             take: take,
